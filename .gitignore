@@ -1,0 +1,37 @@
+# Ignore Maven target directory
+target/
+
+# Ignore Spring Tool Suite (STS) files
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# Ignore IntelliJ IDEA files
+.idea
+*.iws
+*.iml
+*.ipr
+
+# Ignore NetBeans files
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Ignore VS Code files
+.vscode/
+
+# Ignore log files
+*.log
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db

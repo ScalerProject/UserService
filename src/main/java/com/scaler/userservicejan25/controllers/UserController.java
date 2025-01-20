@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -41,8 +43,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/validate")
+    @GetMapping("/validate/{tokenValue}")
     public UserDto validateToken(@PathVariable String tokenValue){
-        return null;
+        User user = userService.validateToken(tokenValue);
+        return UserDto.from(user);
     }
 }

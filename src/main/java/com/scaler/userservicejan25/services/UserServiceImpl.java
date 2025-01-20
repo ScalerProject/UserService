@@ -77,6 +77,20 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User validateToken(String tokenValue) {
-        return null;
+        //We haven't implemented JWT yet so we only need to check for the following -
+        //1)Is the token present in the DB
+        //2)Is the token expired
+        //3)Is the token deleted
+        //For validating the token
+        Optional<Token> optionalToken = tokenRepository.findByTokenValueAndDeletedAndExpiryDateGreaterThan(
+                tokenValue, false, new Date()
+        );
+
+        //if token is invalid
+        if(optionalToken.isEmpty()){
+            return null;
+        }
+
+        return optionalToken.get().getUser();
     }
 }

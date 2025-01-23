@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-@Entity(name = "tokens")
+@Entity(name="tokens")
 public class Token extends BaseModel{
     private String tokenValue;
     private Date expiryDate;

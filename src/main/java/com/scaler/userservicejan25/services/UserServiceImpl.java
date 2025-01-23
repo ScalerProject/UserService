@@ -9,10 +9,7 @@ import com.scaler.userservicejan25.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service("UserServiceImpl")
 public class UserServiceImpl implements UserService{
@@ -36,6 +33,7 @@ public class UserServiceImpl implements UserService{
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setName(name);
+        user.setRoles(new ArrayList<>());
 
         return userRepository.save(user);
     }

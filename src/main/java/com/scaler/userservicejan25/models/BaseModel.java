@@ -14,7 +14,7 @@ public class BaseModel {
     private Long id;
     private Date createdAt;
     private Date lastModifiedAt;
-    private Boolean deleted;
+    private Boolean deleted = false;
 
     public Long getId() {
         return id;

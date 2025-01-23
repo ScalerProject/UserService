@@ -37,4 +37,8 @@ public class Token extends BaseModel{
         return user;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

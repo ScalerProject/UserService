@@ -6,20 +6,24 @@ import com.scaler.userservicejan25.models.Token;
 import com.scaler.userservicejan25.models.User;
 import com.scaler.userservicejan25.repositories.TokenRepository;
 import com.scaler.userservicejan25.repositories.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service("UserServiceImpl")
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, TokenRepository tokenRepository) {
+    public UserServiceImpl(UserRepository userRepository, TokenRepository tokenRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -30,7 +34,7 @@ public class UserServiceImpl implements UserService{
         }
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setName(name);
 
         return userRepository.save(user);
@@ -43,9 +47,10 @@ public class UserServiceImpl implements UserService{
             throw new UserNotFoundException(email, "User not found");
         }
         User user = optionalUser.get();
-        if(user.getPassword().equals(password)) {
+        if(passwordEncoder.matches(password, user.getPassword())){
             Token token = new Token();
-            token.setTokenValue("token");
+            token.setUser(user);
+            token.setTokenValue(UUID.randomUUID().toString().replace("-", ""));
 
             Date currentDate = new Date();
             Calendar calendar = Calendar.getInstance();
